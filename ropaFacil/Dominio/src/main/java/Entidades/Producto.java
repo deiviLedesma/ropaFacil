@@ -31,7 +31,7 @@ public class Producto implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "nombre_producto", nullable = false, length = 150)
@@ -55,13 +55,13 @@ public class Producto implements Serializable {
     private String caja;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "estadp", nullable = false)
+    @Column(name = "estado", nullable = false)
     private Estado estado;
 
-    @OneToMany(mappedBy = "producto", cascade = CascadeType.MERGE)
+    @OneToMany(mappedBy = "producto", cascade = CascadeType.ALL)
     private List<DetalleVenta> detalleVentas;
 
-    @OneToMany(mappedBy = "producto", cascade = CascadeType.MERGE)
+    @OneToMany(mappedBy = "producto", cascade = CascadeType.ALL)
     private List<DetalleCompra> detalleCompras;
 
     public Producto() {

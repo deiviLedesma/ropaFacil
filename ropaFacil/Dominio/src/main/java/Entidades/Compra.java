@@ -15,8 +15,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 /**
  *
@@ -31,7 +29,6 @@ public class Compra implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "fecha_compra", nullable = false)
     private LocalDateTime fechaCompra;
 
@@ -105,7 +102,7 @@ public class Compra implements Serializable {
 
     @Override
     public String toString() {
-        return "Compra{" + "id=" + id + ", fechaCompra=" + fechaCompra + ", total=" + total + ", detalleCompras=" + detalleCompras + '}';
+        return "Compra{" + "id=" + id + ", fechaCompra=" + fechaCompra + ", total=" + total + '}';
     }
 
 }

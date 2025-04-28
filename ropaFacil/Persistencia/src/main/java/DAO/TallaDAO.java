@@ -16,6 +16,19 @@ import javax.persistence.EntityManager;
  */
 public class TallaDAO implements ITallaDAO {
 
+    private static TallaDAO instanceTallaDAO;
+
+    public TallaDAO() {
+    }
+
+    public static TallaDAO getInstanceDAO() {
+        if (instanceTallaDAO == null) {
+            instanceTallaDAO = new TallaDAO();
+        }
+
+        return instanceTallaDAO;
+    }
+
     @Override
     public void insertar(Talla talla) {
         EntityManager em = Conexion.crearConexion();

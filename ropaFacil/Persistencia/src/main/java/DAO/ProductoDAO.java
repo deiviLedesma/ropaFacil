@@ -55,7 +55,7 @@ public class ProductoDAO implements IProductoDAO {
     }
 
     @Override
-    public void eliminar(int idProducto) throws PersistenciaException {
+    public void eliminar(Long idProducto) throws PersistenciaException {
         EntityManager em = Conexion.crearConexion();
         try {
             Producto producto = em.find(Producto.class, idProducto);
@@ -70,7 +70,7 @@ public class ProductoDAO implements IProductoDAO {
     }
 
     @Override
-    public Producto buscarPorId(int idProducto) throws PersistenciaException {
+    public Producto buscarPorId(Long idProducto) throws PersistenciaException {
         EntityManager em = Conexion.crearConexion();
         try {
             return em.find(Producto.class, idProducto);

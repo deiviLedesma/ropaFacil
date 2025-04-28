@@ -26,11 +26,22 @@ public class Talla implements Serializable {
     @Column(length = 5)
     private String codigo;
 
-    @OneToMany(mappedBy = "talla", cascade = CascadeType.MERGE)
+    @OneToMany(mappedBy = "talla", cascade = CascadeType.ALL)
     private List<DetalleCompra> detalleCompra;
 
-    @OneToMany(mappedBy = "talla", cascade = CascadeType.MERGE)
+    @OneToMany(mappedBy = "talla", cascade = CascadeType.ALL)
     private List<DetalleVenta> detalleVentas;
+
+    @Column(name = "descripcion")
+    private String descripcion;
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
 
     public String getCodigo() {
         return codigo;
@@ -65,6 +76,20 @@ public class Talla implements Serializable {
         this.detalleVentas = detalleVentas;
     }
 
+    public Talla(String codigo, String descripcion) {
+        this.codigo = codigo;
+        this.descripcion = descripcion;
+    }
+
+    
+    public Talla(String codigo, List<DetalleCompra> detalleCompra, List<DetalleVenta> detalleVentas, String descripcion) {
+        this.codigo = codigo;
+        this.detalleCompra = detalleCompra;
+        this.detalleVentas = detalleVentas;
+        this.descripcion = descripcion;
+    }
+    
+
     @Override
     public int hashCode() {
         int hash = 7;
@@ -89,7 +114,7 @@ public class Talla implements Serializable {
 
     @Override
     public String toString() {
-        return "Talla{" + "codigo=" + codigo + ", detalleCompra=" + detalleCompra + ", detalleVentas=" + detalleVentas + '}';
+        return "Talla{" + "codigo=" + codigo + ", detalleCompra=" + detalleCompra + ", detalleVentas=" + detalleVentas + ", descripcion=" + descripcion + '}';
     }
 
 }

@@ -17,6 +17,19 @@ import javax.persistence.EntityManager;
  */
 public class VentaDAO implements IVentaDAO {
 
+    private static VentaDAO instanceVentaDAO;
+
+    public VentaDAO() {
+    }
+
+    public static VentaDAO getInstanceDAO() {
+        if (instanceVentaDAO == null) {
+            instanceVentaDAO = new VentaDAO();
+        }
+
+        return instanceVentaDAO;
+    }
+
     @Override
     public void insertar(Venta venta) throws PersistenciaException {
         EntityManager em = Conexion.crearConexion();
@@ -30,7 +43,7 @@ public class VentaDAO implements IVentaDAO {
     }
 
     @Override
-    public Venta buscarPorId(int id) throws PersistenciaException {
+    public Venta buscarPorId(Long id) throws PersistenciaException {
         EntityManager em = Conexion.crearConexion();
         try {
             return em.find(Venta.class, id);
@@ -42,9 +55,9 @@ public class VentaDAO implements IVentaDAO {
     @Override
     public List<Venta> buscarTodas() throws PersistenciaException {
         EntityManager em = Conexion.crearConexion();
-        try{
+        try {
             return em.createQuery("SELECT v FROM Venta v", Venta.class).getResultList();
-        } finally{
+        } finally {
             em.close();
         }
     }

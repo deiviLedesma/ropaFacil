@@ -6,7 +6,6 @@ package DAO;
 
 import Entidades.Compra;
 import Interfaces.ICompraDAO;
-import Persistencia.PersistenciaException;
 import conexion.Conexion;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -17,20 +16,38 @@ import javax.persistence.EntityManager;
  */
 public class CompraDAO implements ICompraDAO {
 
+    private static CompraDAO instanceCompraDAO;
+
+    public CompraDAO() {
+    }
+
+    public static CompraDAO getInstanceDAO() {
+        if (instanceCompraDAO == null) {
+            instanceCompraDAO = new CompraDAO();
+        }
+
+        return instanceCompraDAO;
+    }
+
     @Override
-    public void insertar(Compra compra) {
+    public Compra insertar(Compra compra) {
         EntityManager em = Conexion.crearConexion();
         try {
             em.getTransaction().begin();
-            em.persist(compra);
+            // Al hacer merge, JPA:
+            //  • persiste o actualiza la Compra
+            //  • persiste/actualiza todos sus DetalleCompra (cascade ALL en @OneToMany)
+            //  • persiste/actualiza cada Producto y Talla enlazado (cascade MERGE/PERSIST en @ManyToOne)
+            Compra managed = em.merge(compra);
             em.getTransaction().commit();
+            return managed;
         } finally {
             em.close();
         }
     }
 
     @Override
-    public Compra buscarPorId(int id) {
+    public Compra buscarPorId(Long id) {
         EntityManager em = Conexion.crearConexion();
         try {
             return em.find(Compra.class, id);

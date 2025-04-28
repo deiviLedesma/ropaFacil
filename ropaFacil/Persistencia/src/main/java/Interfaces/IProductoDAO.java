@@ -18,9 +18,9 @@ public interface IProductoDAO {
 
     public void actualizar(Producto producto) throws PersistenciaException;
 
-    public void eliminar(int idProducto) throws PersistenciaException;
+    public void eliminar(Long idProducto) throws PersistenciaException;
 
-    public Producto buscarPorId(int idProducto) throws PersistenciaException;
+    public Producto buscarPorId(Long idProducto) throws PersistenciaException;
 
     public List<Producto> buscarTodos();
 

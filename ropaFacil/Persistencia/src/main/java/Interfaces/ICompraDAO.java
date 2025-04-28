@@ -14,9 +14,9 @@ import java.util.List;
  */
 public interface ICompraDAO {
 
-    public void insertar(Compra compra) throws PersistenciaException;
+    public Compra insertar(Compra compra) throws PersistenciaException;
 
-    public Compra buscarPorId(int id) throws PersistenciaException;
+    public Compra buscarPorId(Long id) throws PersistenciaException;
 
     public List<Compra> buscarTodas() throws PersistenciaException;
 

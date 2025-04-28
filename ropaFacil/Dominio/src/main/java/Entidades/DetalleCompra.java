@@ -5,6 +5,7 @@
 package Entidades;
 
 import java.io.Serializable;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -31,12 +32,12 @@ public class DetalleCompra implements Serializable {
     @JoinColumn(name = "idCompra", nullable = false)
     private Compra compra;
 
-    @ManyToOne
-    @JoinColumn(name = "idProducto", nullable = false)
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinColumn(name = "idProducto")
     private Producto producto;
 
-    @ManyToOne
-    @JoinColumn(name = "talla", nullable = false)
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinColumn(name = "Talla")
     private Talla talla;
 
     @Column(name = "cantidad", nullable = false)
@@ -127,7 +128,7 @@ public class DetalleCompra implements Serializable {
 
     @Override
     public String toString() {
-        return "DetalleCompra{" + "id=" + id + ", compra=" + compra + ", producto=" + producto + ", talla=" + talla + ", cantidad=" + cantidad + ", precioUnitario=" + precioUnitario + '}';
+        return "DetalleCompra{" + "id=" + id + ", producto=" + producto + ", talla=" + talla + ", cantidad=" + cantidad + ", precioUnitario=" + precioUnitario + '}';
     }
 
 }

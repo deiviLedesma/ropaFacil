@@ -16,7 +16,7 @@ public interface IVentaDAO {
 
     public void insertar(Venta venta) throws PersistenciaException;
 
-    public Venta buscarPorId(int id) throws PersistenciaException;
+    public Venta buscarPorId(Long id) throws PersistenciaException;
 
     public List<Venta> buscarTodas() throws PersistenciaException;
 
