@@ -4,14 +4,15 @@
  */
 package DTO;
 
+import Entidades.DetalleCompra;
+
 /**
  *
  * @author SDavidLedesma
  */
 public class DetalleCompraDTO {
 
-    private int idDetalle;
-    private CompraDTO compra;
+    private Long id;
     private ProductoDTO producto;
     private TallaDTO talla;
     private int cantidad;
@@ -20,37 +21,41 @@ public class DetalleCompraDTO {
     public DetalleCompraDTO() {
     }
 
-    public DetalleCompraDTO(int idDetalle, CompraDTO compra, ProductoDTO producto, TallaDTO talla, int cantidad, double precioUnitario) {
-        this.idDetalle = idDetalle;
-        this.compra = compra;
+    public DetalleCompraDTO(Long id, ProductoDTO producto, TallaDTO talla, int cantidad, double precioUnitario) {
+        this.id = id;
         this.producto = producto;
         this.talla = talla;
         this.cantidad = cantidad;
         this.precioUnitario = precioUnitario;
     }
 
-    public DetalleCompraDTO(CompraDTO compra, ProductoDTO producto, TallaDTO talla, int cantidad, double precioUnitario) {
-        this.compra = compra;
-        this.producto = producto;
-        this.talla = talla;
-        this.cantidad = cantidad;
-        this.precioUnitario = precioUnitario;
+    // Constructor desde la entidad
+    public DetalleCompraDTO(DetalleCompra detalle) {
+        this.id = detalle.getId();
+        this.producto = new ProductoDTO(detalle.getProducto());
+        this.talla = new TallaDTO(detalle.getTalla());
+        this.cantidad = detalle.getCantidad();
+        this.precioUnitario = detalle.getPrecioUnitario();
     }
 
-    public int getIdDetalle() {
-        return idDetalle;
+    // Método para convertir a entidad
+    public DetalleCompra toEntity() {
+        DetalleCompra entity = new DetalleCompra();
+        entity.setId(this.id);
+        entity.setProducto(this.producto.toEntity());
+        entity.setTalla(this.talla.toEntity());
+        entity.setCantidad(this.cantidad);
+        entity.setPrecioUnitario(this.precioUnitario);
+        return entity;
     }
 
-    public void setIdDetalle(int idDetalle) {
-        this.idDetalle = idDetalle;
+    // Getters y setters
+    public Long getId() {
+        return id;
     }
 
-    public CompraDTO getCompra() {
-        return compra;
-    }
-
-    public void setCompra(CompraDTO compra) {
-        this.compra = compra;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public ProductoDTO getProducto() {
@@ -87,7 +92,6 @@ public class DetalleCompraDTO {
 
     @Override
     public String toString() {
-        return "DetalleCompraDTO{" + "idDetalle=" + idDetalle + ", compra=" + compra + ", producto=" + producto + ", talla=" + talla + ", cantidad=" + cantidad + ", precioUnitario=" + precioUnitario + '}';
+        return producto.getNombre() + " - Talla: " + talla.getDescripcion() + " - Cantidad: " + cantidad;
     }
-
 }

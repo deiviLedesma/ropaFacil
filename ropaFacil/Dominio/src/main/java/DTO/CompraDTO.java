@@ -4,7 +4,10 @@
  */
 package DTO;
 
+import Entidades.Compra;
+import Entidades.DetalleCompra;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -13,63 +16,86 @@ import java.util.List;
  */
 public class CompraDTO {
 
-    private int idCompra;
-    private LocalDateTime fechaHora;
-    private double total;
-    private List<DetalleCompraDTO> detalleCompraDTOs;
-    //proveedor a futuro 
+    private Long id;
+    private LocalDateTime fechaCompra;
+    private Double total;
+    private List<DetalleCompraDTO> detalleCompras;
 
     public CompraDTO() {
+        this.detalleCompras = new ArrayList<>();
     }
 
-    public CompraDTO(int idCompra, LocalDateTime fechaHora, double total, List<DetalleCompraDTO> detalleCompraDTOs) {
-        this.idCompra = idCompra;
-        this.fechaHora = fechaHora;
+    public CompraDTO(Long id, LocalDateTime fechaCompra, Double total, List<DetalleCompraDTO> detalleCompras) {
+        this.id = id;
+        this.fechaCompra = fechaCompra;
         this.total = total;
-        this.detalleCompraDTOs = detalleCompraDTOs;
+        this.detalleCompras = detalleCompras;
     }
 
-    public CompraDTO(LocalDateTime fechaHora, double total, List<DetalleCompraDTO> detalleCompraDTOs) {
-        this.fechaHora = fechaHora;
-        this.total = total;
-        this.detalleCompraDTOs = detalleCompraDTOs;
+    // Constructor desde entidad
+    public CompraDTO(Compra compra) {
+        this.id = compra.getId();
+        this.fechaCompra = compra.getFechaCompra();
+        this.total = compra.getTotal();
+        this.detalleCompras = new ArrayList<>();
+        for (DetalleCompra dc : compra.getDetalleCompras()) {
+            this.detalleCompras.add(new DetalleCompraDTO(dc));
+        }
     }
 
-    public int getIdCompra() {
-        return idCompra;
+    // Convertir a entidad
+    public Compra toEntity() {
+        Compra compra = new Compra();
+        compra.setId(this.id);
+        compra.setFechaCompra(this.fechaCompra);
+        compra.setTotal(this.total);
+
+        List<DetalleCompra> detalles = new ArrayList<>();
+        for (DetalleCompraDTO dto : this.detalleCompras) {
+            DetalleCompra entidad = dto.toEntity();
+            entidad.setCompra(compra); // establecer la relación inversa
+            detalles.add(entidad);
+        }
+
+        compra.setDetalleCompras(detalles);
+        return compra;
     }
 
-    public void setIdCompra(int idCompra) {
-        this.idCompra = idCompra;
+    // Getters y setters
+    public Long getId() {
+        return id;
     }
 
-    public LocalDateTime getFechaHora() {
-        return fechaHora;
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    public void setFechaHora(LocalDateTime fechaHora) {
-        this.fechaHora = fechaHora;
+    public LocalDateTime getFechaCompra() {
+        return fechaCompra;
     }
 
-    public double getTotal() {
+    public void setFechaCompra(LocalDateTime fechaCompra) {
+        this.fechaCompra = fechaCompra;
+    }
+
+    public Double getTotal() {
         return total;
     }
 
-    public void setTotal(double total) {
+    public void setTotal(Double total) {
         this.total = total;
     }
 
-    public List<DetalleCompraDTO> getDetalleCompraDTOs() {
-        return detalleCompraDTOs;
+    public List<DetalleCompraDTO> getDetalleCompras() {
+        return detalleCompras;
     }
 
-    public void setDetalleCompraDTOs(List<DetalleCompraDTO> detalleCompraDTOs) {
-        this.detalleCompraDTOs = detalleCompraDTOs;
+    public void setDetalleCompras(List<DetalleCompraDTO> detalleCompras) {
+        this.detalleCompras = detalleCompras;
     }
 
     @Override
     public String toString() {
-        return "CompraDTO{" + "idCompra=" + idCompra + ", fechaHora=" + fechaHora + ", total=" + total + ", detalleCompraDTOs=" + detalleCompraDTOs + '}';
+        return "Compra ID: " + id + ", Total: $" + total;
     }
-
 }

@@ -31,12 +31,13 @@ public class VentaDAO implements IVentaDAO {
     }
 
     @Override
-    public void insertar(Venta venta) throws PersistenciaException {
+    public Venta insertar(Venta venta) throws PersistenciaException {
         EntityManager em = Conexion.crearConexion();
         try {
             em.getTransaction().begin();
             em.persist(venta);
             em.getTransaction().commit();
+            return venta;
         } finally {
             em.close();
         }

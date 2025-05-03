@@ -14,7 +14,7 @@ import java.util.List;
  */
 public interface IVentaDAO {
 
-    public void insertar(Venta venta) throws PersistenciaException;
+    public Venta insertar(Venta venta) throws PersistenciaException;
 
     public Venta buscarPorId(Long id) throws PersistenciaException;
 

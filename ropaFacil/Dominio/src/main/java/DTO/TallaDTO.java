@@ -4,6 +4,9 @@
  */
 package DTO;
 
+import Entidades.Talla;
+import java.util.AbstractList;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -13,24 +16,40 @@ import java.util.List;
 public class TallaDTO {
 
     private String codigo;
-    private String descipcion;
+    private String descripcion;
     private List<DetalleVentaDTO> detalleVentaTalla;
     private List<DetalleCompraDTO> detalleCompraTalla;
 
     public TallaDTO() {
     }
 
-    public TallaDTO(String codigo, String descipcion, List<DetalleVentaDTO> detalleVentaTalla, List<DetalleCompraDTO> detalleCompraTalla) {
+    public TallaDTO(String codigo, String descripcion, List<DetalleVentaDTO> detalleVentaTalla, List<DetalleCompraDTO> detalleCompraTalla) {
         this.codigo = codigo;
-        this.descipcion = descipcion;
+        this.descripcion = descripcion;
         this.detalleVentaTalla = detalleVentaTalla;
         this.detalleCompraTalla = detalleCompraTalla;
     }
 
-    public TallaDTO(String descipcion, List<DetalleVentaDTO> detalleVentaTalla, List<DetalleCompraDTO> detalleCompraTalla) {
-        this.descipcion = descipcion;
+    public TallaDTO(String descripcion, List<DetalleVentaDTO> detalleVentaTalla, List<DetalleCompraDTO> detalleCompraTalla) {
+        this.descripcion = descripcion;
         this.detalleVentaTalla = detalleVentaTalla;
         this.detalleCompraTalla = detalleCompraTalla;
+    }
+
+    // Constructor desde la entidad
+    public TallaDTO(Talla talla) {
+        this.codigo = talla.getCodigo();
+        this.descripcion = talla.getDescripcion();
+      //  this.detalleVentaTalla = new ArrayList<>();
+      //  this.detalleCompraTalla = new ArrayList<>();
+    }
+
+    // Método para convertir a entidad
+    public Talla toEntity() {
+        Talla talla = new Talla();
+        talla.setCodigo(this.codigo);
+        talla.setDescripcion(this.descripcion);
+        return talla;
     }
 
     public String getCodigo() {
@@ -41,12 +60,12 @@ public class TallaDTO {
         this.codigo = codigo;
     }
 
-    public String getDescipcion() {
-        return descipcion;
+    public String getDescripcion() {
+        return descripcion;
     }
 
-    public void setDescipcion(String descipcion) {
-        this.descipcion = descipcion;
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
     }
 
     public List<DetalleVentaDTO> getDetalleVentaTalla() {
@@ -67,7 +86,6 @@ public class TallaDTO {
 
     @Override
     public String toString() {
-        return "TallaDTO{" + "codigo=" + codigo + ", descipcion=" + descipcion + ", detalleVentaTalla=" + detalleVentaTalla + ", detalleCompraTalla=" + detalleCompraTalla + '}';
+        return descripcion; // Esto es útil para JComboBox
     }
-
 }

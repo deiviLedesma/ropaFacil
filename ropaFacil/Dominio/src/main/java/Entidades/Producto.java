@@ -96,8 +96,6 @@ public class Producto implements Serializable {
         this.detalleCompras = detalleCompras;
     }
 
-    
-    
     public Long getId() {
         return id;
     }

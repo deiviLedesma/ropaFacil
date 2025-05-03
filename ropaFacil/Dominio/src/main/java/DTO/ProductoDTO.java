@@ -4,9 +4,12 @@
  */
 package DTO;
 
+import Entidades.Producto;
 import Enums.Categoria;
+import Enums.Color;
 import Enums.Estado;
 import Enums.Tipo;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -15,11 +18,11 @@ import java.util.List;
  */
 public class ProductoDTO {
 
-    private int idProducto;
+    private Long idProducto;
     private String nombre;
     private Tipo tipo;
     private Categoria categoria;
-    private String color; 
+    private Color color;
     private double precioUnitario;
     private String caja;
     private Estado estado;
@@ -29,8 +32,21 @@ public class ProductoDTO {
     public ProductoDTO() {
     }
 
-    public ProductoDTO(int idProducto, String nombre, Tipo tipo, Categoria categoria, String color, double precioUnitario, String caja, Estado estado, List<DetalleVentaDTO> detallesVenta, List<DetalleCompraDTO> detallesCompra) {
-        this.idProducto = idProducto;
+    public ProductoDTO(Producto producto) {
+        this.idProducto = producto.getId(); 
+        this.nombre = producto.getNombre();
+        this.tipo = producto.getTipo();
+        this.categoria = producto.getCategoria();
+        this.color = producto.getColor();
+        this.precioUnitario = producto.getPrecioUnitario();
+        this.caja = producto.getCaja();
+        this.estado = producto.getEstado();
+        // Puedes dejar las listas vacías si no las necesitas
+        this.detallesVenta = new ArrayList<>();
+        this.detallesCompra = new ArrayList<>();
+    }
+
+    public ProductoDTO(String nombre, Tipo tipo, Categoria categoria, Color color, double precioUnitario, String caja, Estado estado, List<DetalleVentaDTO> detallesVenta, List<DetalleCompraDTO> detallesCompra) {
         this.nombre = nombre;
         this.tipo = tipo;
         this.categoria = categoria;
@@ -42,23 +58,11 @@ public class ProductoDTO {
         this.detallesCompra = detallesCompra;
     }
 
-    public ProductoDTO(String nombre, Tipo tipo, Categoria categoria, String color, double precioUnitario, String caja, Estado estado, List<DetalleVentaDTO> detallesVenta, List<DetalleCompraDTO> detallesCompra) {
-        this.nombre = nombre;
-        this.tipo = tipo;
-        this.categoria = categoria;
-        this.color = color;
-        this.precioUnitario = precioUnitario;
-        this.caja = caja;
-        this.estado = estado;
-        this.detallesVenta = detallesVenta;
-        this.detallesCompra = detallesCompra;
-    }
-
-    public int getIdProducto() {
+    public Long getIdProducto() {
         return idProducto;
     }
 
-    public void setIdProducto(int idProducto) {
+    public void setIdProducto(Long idProducto) {
         this.idProducto = idProducto;
     }
 
@@ -86,11 +90,11 @@ public class ProductoDTO {
         this.categoria = categoria;
     }
 
-    public String getColor() {
+    public Color getColor() {
         return color;
     }
 
-    public void setColor(String color) {
+    public void setColor(Color color) {
         this.color = color;
     }
 
@@ -132,6 +136,19 @@ public class ProductoDTO {
 
     public void setDetallesCompra(List<DetalleCompraDTO> detallesCompra) {
         this.detallesCompra = detallesCompra;
+    }
+
+    public Producto toEntity() {
+        Producto producto = new Producto();
+        producto.setId(this.idProducto);
+        producto.setNombre(this.nombre);
+        producto.setTipo(this.tipo);
+        producto.setCategoria(this.categoria);
+        producto.setColor(this.color);
+        producto.setPrecioUnitario(this.precioUnitario);
+        producto.setCaja(this.caja);
+        producto.setEstado(this.estado);
+        return producto;
     }
 
     @Override

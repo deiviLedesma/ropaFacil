@@ -1,76 +1,93 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package DTO;
 
+import Entidades.Venta;
+import Entidades.DetalleVenta;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
-/**
- *
- * @author SDavidLedesma
- */
 public class VentaDTO {
 
-    private int idVenta;
-    private LocalDateTime fechaHora;
-    private double total;
-    private List<DetalleVentaDTO> detalleVentaDTOs;
+    private Long id;
+    private LocalDateTime fechaVenta;
+    private Double total;
+    private List<DetalleVentaDTO> detalleVentas;
 
     public VentaDTO() {
+        this.detalleVentas = new ArrayList<>();
     }
 
-    public VentaDTO(LocalDateTime fechaHora, double total, List<DetalleVentaDTO> detalleVentaDTOs) {
-        this.fechaHora = fechaHora;
+    public VentaDTO(Long id, LocalDateTime fechaVenta, Double total, List<DetalleVentaDTO> detalleVentas) {
+        this.id = id;
+        this.fechaVenta = fechaVenta;
         this.total = total;
-        this.detalleVentaDTOs = detalleVentaDTOs;
+        this.detalleVentas = detalleVentas;
     }
 
-    public VentaDTO(int idVenta, LocalDateTime fechaHora, double total, List<DetalleVentaDTO> detalleVentaDTOs) {
-        this.idVenta = idVenta;
-        this.fechaHora = fechaHora;
-        this.total = total;
-        this.detalleVentaDTOs = detalleVentaDTOs;
-    }
-    
-    
-
-    public int getIdVenta() {
-        return idVenta;
+    // Constructor desde entidad
+    public VentaDTO(Venta venta) {
+        this.id = venta.getId();
+        this.fechaVenta = venta.getFechaHora();
+        this.total = venta.getTotal();
+        this.detalleVentas = new ArrayList<>();
+        for (DetalleVenta dv : venta.getDetalleVentas()) {
+            this.detalleVentas.add(new DetalleVentaDTO(dv));
+        }
     }
 
-    public void setIdVenta(int idVenta) {
-        this.idVenta = idVenta;
+    // Convertir a entidad
+    public Venta toEntity() {
+        Venta venta = new Venta();
+        venta.setId(this.id);
+        venta.setFechaHora(this.fechaVenta);
+        venta.setTotal(this.total);
+
+        List<DetalleVenta> detalles = new ArrayList<>();
+        for (DetalleVentaDTO dto : this.detalleVentas) {
+            DetalleVenta entidad = dto.toEntity();
+            entidad.setVenta(venta); // establecer la relación inversa
+            detalles.add(entidad);
+        }
+
+        venta.setDetalleVentas(detalles);
+        return venta;
     }
 
-    public LocalDateTime getFechaHora() {
-        return fechaHora;
+    // Getters y setters
+    public Long getId() {
+        return id;
     }
 
-    public void setFechaHora(LocalDateTime fechaHora) {
-        this.fechaHora = fechaHora;
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    public double getTotal() {
+    public LocalDateTime getFechaVenta() {
+        return fechaVenta;
+    }
+
+    public void setFechaVenta(LocalDateTime fechaVenta) {
+        this.fechaVenta = fechaVenta;
+    }
+
+    public Double getTotal() {
         return total;
     }
 
-    public void setTotal(double total) {
+    public void setTotal(Double total) {
         this.total = total;
     }
 
-    public List<DetalleVentaDTO> getDetalleVentaDTOs() {
-        return detalleVentaDTOs;
+    public List<DetalleVentaDTO> getDetalleVentas() {
+        return detalleVentas;
     }
 
-    public void setDetalleVentaDTOs(List<DetalleVentaDTO> detalleVentaDTOs) {
-        this.detalleVentaDTOs = detalleVentaDTOs;
+    public void setDetalleVentas(List<DetalleVentaDTO> detalleVentas) {
+        this.detalleVentas = detalleVentas;
     }
 
     @Override
     public String toString() {
-        return "VentaDTO{" + "idVenta=" + idVenta + ", fechaHora=" + fechaHora + ", total=" + total + ", detalleVentaDTOs=" + detalleVentaDTOs + '}';
+        return "Venta ID: " + id + ", Total: $" + total;
     }
-
 }
