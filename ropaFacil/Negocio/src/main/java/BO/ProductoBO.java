@@ -16,20 +16,31 @@ import java.util.stream.Collectors;
  */
 public class ProductoBO implements IProductoBO {
 
-    private final ProductoDAO productoDAO;
+    final ProductoDAO productoDAO;
 
     public ProductoBO() {
         this.productoDAO = ProductoDAO.getInstanceDAO();
     }
 
+    // Constructor alternativo para pruebas
+    public ProductoBO(ProductoDAO productoDAO) {
+        this.productoDAO = productoDAO;
+    }
+
     @Override
     public ProductoDTO crearProducto(ProductoDTO dto)
             throws NegocioException, PersistenciaException {
-        // Validaciones de negocio
+
+        if (dto == null) {
+            throw new NegocioException("El producto no puede ser null.");
+        }
+
+        // Validar nombre
         if (dto.getNombre() == null || dto.getNombre().isBlank()) {
             throw new NegocioException("El nombre es obligatorio.");
         }
-        // No permitir duplicar nombre + color + caja
+
+        // Evitar duplicados (nombre + color + caja)
         boolean existe = productoDAO.buscarTodos().stream()
                 .anyMatch(p
                         -> p.getNombre().equalsIgnoreCase(dto.getNombre())
@@ -39,37 +50,21 @@ public class ProductoBO implements IProductoBO {
         if (existe) {
             throw new NegocioException("Ya existe un producto con ese nombre/color/caja.");
         }
-        // Persistir
-        Producto entity = dto.toEntity();
-        productoDAO.insertar(entity);
-        dto.setIdProducto(entity.getId());
-        return dto;
-    }
 
-    @Override
-    public ProductoDTO actualizarProducto(ProductoDTO dto)
-            throws NegocioException, PersistenciaException {
-        if (dto.getIdProducto() <= 0) {
-            throw new NegocioException("ID de producto inválido.");
-        }
-        // Validaciones opcionales...
-        Producto entity = dto.toEntity();
-        productoDAO.actualizar(entity);
-        return dto;
-    }
+        // Persistir entidad
+        Producto entidad = dto.toEntity();
+        productoDAO.insertar(entidad);
 
-    @Override
-    public void eliminarProducto(Long id)
-            throws PersistenciaException, NegocioException {
-        // Podrías validar que no haya ventas o compras asociadas
-        productoDAO.eliminar(id);
+        // Reflejar el ID generado en el DTO
+        dto.setIdProducto(entidad.getId());
+        return dto;
     }
 
     @Override
     public ProductoDTO buscarProductoPorId(Long id)
             throws PersistenciaException {
         Producto p = productoDAO.buscarPorId(id);
-        return p != null ? new ProductoDTO(p) : null;
+        return (p != null) ? new ProductoDTO(p) : null;
     }
 
     @Override
@@ -78,5 +73,27 @@ public class ProductoBO implements IProductoBO {
         return productoDAO.buscarTodos().stream()
                 .map(ProductoDTO::new)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public ProductoDTO actualizarProducto(ProductoDTO dto)
+            throws NegocioException, PersistenciaException {
+
+        if (dto.getIdProducto() == null || dto.getIdProducto() <= 0) {
+            throw new NegocioException("ID de producto inválido.");
+        }
+
+        // (Opcional) validar campos como en crear…
+        Producto entidad = dto.toEntity();
+        productoDAO.actualizar(entidad);
+        return dto;
+    }
+
+    @Override
+    public void eliminarProducto(Long id)
+            throws PersistenciaException, NegocioException {
+
+        // (Opcional) checar relaciones antes de borrar…
+        productoDAO.eliminar(id);
     }
 }

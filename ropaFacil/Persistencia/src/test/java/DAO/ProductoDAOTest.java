@@ -31,7 +31,7 @@ public class ProductoDAOTest {
     @Test
     public void testInsertarYBuscarPorId() throws PersistenciaException {
         Producto producto = new Producto();
-        producto.setNombre("Playera Azul");
+        producto.setNombre("Playera Azulada");
         producto.setColor(Color.ROJO);
         producto.setPrecioUnitario(299.99);
         producto.setCaja("5");

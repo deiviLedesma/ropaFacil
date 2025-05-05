@@ -33,7 +33,7 @@ public class ProductoDTO {
     }
 
     public ProductoDTO(Producto producto) {
-        this.idProducto = producto.getId(); 
+        this.idProducto = producto.getId();
         this.nombre = producto.getNombre();
         this.tipo = producto.getTipo();
         this.categoria = producto.getCategoria();
@@ -139,8 +139,12 @@ public class ProductoDTO {
     }
 
     public Producto toEntity() {
+
         Producto producto = new Producto();
-        producto.setId(this.idProducto);
+        // Sólo setear el ID si viene no-nulo (para actualizaciones).
+        if (this.idProducto != null) {
+            producto.setId(this.idProducto);
+        }
         producto.setNombre(this.nombre);
         producto.setTipo(this.tipo);
         producto.setCategoria(this.categoria);
@@ -148,6 +152,7 @@ public class ProductoDTO {
         producto.setPrecioUnitario(this.precioUnitario);
         producto.setCaja(this.caja);
         producto.setEstado(this.estado);
+
         return producto;
     }
 

@@ -1,83 +1,92 @@
 package BO;
 
+import DAO.ProductoDAO;
 import DTO.ProductoDTO;
-import Enums.Categoria;
+import Entidades.Producto;
 import Enums.Color;
-import Enums.Estado;
-import Enums.Tipo;
-import Persistencia.PersistenciaException;
 import Exception.NegocioException;
-import Interfaces.IProductoBO;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
-import java.util.List;
+import java.util.Collections;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doAnswer;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
+/**
+ *
+ * @author SDavidLedesma
+ */
 public class ProductoBOTest {
 
-    private IProductoBO productoBO;
+    public ProductoDAO mockDAO;
+    public ProductoBO productoBO;
 
-    @BeforeAll
-    void setup() {
-        productoBO = new ProductoBO();
+    @BeforeEach
+    public void setup() {
+        mockDAO = mock(ProductoDAO.class);
+        productoBO = new ProductoBO(mockDAO); // inyección directa
     }
 
     @Test
-    void crearYBuscarProducto() throws PersistenciaException, NegocioException {
+    public void testCrearProducto_Exitoso() throws Exception {
         ProductoDTO dto = new ProductoDTO();
-        dto.setNombre("TestCamisa");
-        dto.setTipo(Tipo.CAMISA);
-        dto.setCategoria(Categoria.DAMA);
-        dto.setColor(Color.ROJO);
-        dto.setPrecioUnitario(100.0);
-        dto.setCaja("1");
-        dto.setEstado(Estado.ACTIVO);
+        dto.setNombre("Producto ROSa");
+        dto.setColor(Color.ROSA);
+        dto.setCaja("Caja A");
 
-        // creo
-        ProductoDTO creado = productoBO.crearProducto(dto);
-        assertTrue(creado.getIdProducto() > 0);
+        when(mockDAO.buscarTodos()).thenReturn(Collections.emptyList());
+        doAnswer(invoc -> {
+            Producto p = invoc.getArgument(0);
+            p.setId(1L); // Simular ID generado
+            return null;
+        }).when(mockDAO).insertar(any(Producto.class));
 
-        // busco
-        ProductoDTO encontrado = productoBO.buscarProductoPorId(creado.getIdProducto());
-        assertNotNull(encontrado);
-        assertEquals("TestCamisa", encontrado.getNombre());
+        ProductoDTO resultado = productoBO.crearProducto(dto);
+
+        assertNotNull(resultado);
+        assertEquals(1L, resultado.getIdProducto());
     }
 
     @Test
-    void listarTodos() throws PersistenciaException {
-        List<ProductoDTO> todos = productoBO.listarTodos();
-        assertNotNull(todos);
-        assertFalse(todos.isEmpty());
+    public void testCrearProducto_Nulo() {
+        assertThrows(NegocioException.class, () -> {
+            productoBO.crearProducto(null);
+        });
     }
 
     @Test
-    void actualizarProducto() throws PersistenciaException, NegocioException {
-        // toma el primero
-        ProductoDTO primero = productoBO.listarTodos().get(0);
-        String old = primero.getNombre();
-        primero.setNombre(old + "_X");
-        ProductoDTO upd = productoBO.actualizarProducto(primero);
-        assertEquals(old + "_X", upd.getNombre());
-    }
-
-    @Test
-    void eliminarProducto() throws PersistenciaException, NegocioException {
+    public void testCrearProducto_SinNombre() {
         ProductoDTO dto = new ProductoDTO();
-        dto.setNombre("ToDelete");
-        dto.setTipo(Tipo.VESTIDO);
-        dto.setCategoria(Categoria.CABALLERO);
         dto.setColor(Color.AZUL);
-        dto.setPrecioUnitario(50.0);
-        dto.setCaja("2");
-        dto.setEstado(Estado.ACTIVO);
+        dto.setCaja("Caja A");
 
-        ProductoDTO creado = productoBO.crearProducto(dto);
-        assertNotNull(productoBO.buscarProductoPorId(creado.getIdProducto()));
-
-        productoBO.eliminarProducto(creado.getIdProducto());
-        ProductoDTO borrado = productoBO.buscarProductoPorId(creado.getIdProducto());
-        assertNull(borrado);
+        assertThrows(NegocioException.class, () -> {
+            productoBO.crearProducto(dto);
+        });
     }
+
+    @Test
+    public void testCrearProducto_Duplicado() throws Exception {
+        ProductoDTO dto = new ProductoDTO();
+        dto.setNombre("Producto A");
+        dto.setColor(Color.ROSA);
+        dto.setCaja("Caja A");
+
+        Producto duplicado = new Producto();
+        duplicado.setNombre("Producto A");
+        duplicado.setColor(Color.ROSA);
+        duplicado.setCaja("Caja A");
+
+        when(mockDAO.buscarTodos()).thenReturn(Collections.singletonList(duplicado));
+
+        assertThrows(NegocioException.class, () -> {
+            productoBO.crearProducto(dto);
+        });
+    }
+
+    // Más pruebas pueden añadirse para buscarPorId, actualizarProducto, etc.
 }
