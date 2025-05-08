@@ -9,7 +9,9 @@ import Enums.Color;
 import Enums.Estado;
 import Enums.Tipo;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -59,12 +61,14 @@ public class Producto implements Serializable {
     private Estado estado;
 
     @OneToMany(mappedBy = "producto", cascade = CascadeType.ALL)
-    private List<DetalleVenta> detalleVentas;
+    private List<DetalleVenta> detalleVentas = new ArrayList<>();
 
     @OneToMany(mappedBy = "producto", cascade = CascadeType.ALL)
-    private List<DetalleCompra> detalleCompras;
+    private List<DetalleCompra> detalleCompras = new ArrayList<>();
 
     public Producto() {
+        this.detalleCompras = new ArrayList<>();
+        this.detalleVentas = new ArrayList<>();
     }
 
     public Producto(String nombre, Tipo tipo, Categoria categoria, Color color, double precioUnitario, String caja, Estado estado, List<DetalleVenta> detalleVentas, List<DetalleCompra> detalleCompras) {
@@ -174,6 +178,64 @@ public class Producto implements Serializable {
 
     public void setDetalleCompras(List<DetalleCompra> detalleCompras) {
         this.detalleCompras = detalleCompras;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 83 * hash + Objects.hashCode(this.id);
+        hash = 83 * hash + Objects.hashCode(this.nombre);
+        hash = 83 * hash + Objects.hashCode(this.tipo);
+        hash = 83 * hash + Objects.hashCode(this.categoria);
+        hash = 83 * hash + Objects.hashCode(this.color);
+        hash = 83 * hash + (int) (Double.doubleToLongBits(this.precioUnitario) ^ (Double.doubleToLongBits(this.precioUnitario) >>> 32));
+        hash = 83 * hash + Objects.hashCode(this.caja);
+        hash = 83 * hash + Objects.hashCode(this.estado);
+        hash = 83 * hash + Objects.hashCode(this.detalleVentas);
+        hash = 83 * hash + Objects.hashCode(this.detalleCompras);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Producto other = (Producto) obj;
+        if (Double.doubleToLongBits(this.precioUnitario) != Double.doubleToLongBits(other.precioUnitario)) {
+            return false;
+        }
+        if (!Objects.equals(this.nombre, other.nombre)) {
+            return false;
+        }
+        if (!Objects.equals(this.caja, other.caja)) {
+            return false;
+        }
+        if (!Objects.equals(this.id, other.id)) {
+            return false;
+        }
+        if (this.tipo != other.tipo) {
+            return false;
+        }
+        if (this.categoria != other.categoria) {
+            return false;
+        }
+        if (this.color != other.color) {
+            return false;
+        }
+        if (this.estado != other.estado) {
+            return false;
+        }
+        if (!Objects.equals(this.detalleVentas, other.detalleVentas)) {
+            return false;
+        }
+        return Objects.equals(this.detalleCompras, other.detalleCompras);
     }
 
     @Override

@@ -30,6 +30,8 @@ public class CompraBO implements ICompraBO {
         this.tallaDAO = new TallaDAO();
     }
 
+  
+
     @Override
     public CompraDTO registrarCompra(CompraDTO compraDTO)
             throws NegocioException, PersistenciaException {
@@ -65,7 +67,7 @@ public class CompraBO implements ICompraBO {
 
             // 4) Ajustar stock y persistir
             prod.getDetalleCompras().add(det);
-            productoDAO.actualizar(prod);
+            productoDAO.insertar(prod);
         }
 
         compra.setDetalleCompras(detalles);

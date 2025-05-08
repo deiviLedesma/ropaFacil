@@ -40,8 +40,8 @@ public class TallaDTO {
     public TallaDTO(Talla talla) {
         this.codigo = talla.getCodigo();
         this.descripcion = talla.getDescripcion();
-      //  this.detalleVentaTalla = new ArrayList<>();
-      //  this.detalleCompraTalla = new ArrayList<>();
+        this.detalleVentaTalla = new ArrayList<>();
+        this.detalleCompraTalla = new ArrayList<>();
     }
 
     // Método para convertir a entidad
@@ -49,6 +49,15 @@ public class TallaDTO {
         Talla talla = new Talla();
         talla.setCodigo(this.codigo);
         talla.setDescripcion(this.descripcion);
+
+        // Asegura que las listas estén inicializadas (por si la entidad no lo hace)
+        if (talla.getDetalleCompra() == null) {
+            talla.setDetalleCompra(new ArrayList<>());
+        }
+        if (talla.getDetalleVentas() == null) {
+            talla.setDetalleVentas(new ArrayList<>());
+        }
+
         return talla;
     }
 

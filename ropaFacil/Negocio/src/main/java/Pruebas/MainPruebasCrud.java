@@ -21,7 +21,7 @@ public class MainPruebasCrud {
 
         // 1. Insertar producto
         Producto nuevoProducto = new Producto();
-        nuevoProducto.setNombre("TestProductoQ");
+        nuevoProducto.setNombre("TestProSductoQ");
         nuevoProducto.setTipo(Tipo.CAMISA); // asegúrate que este valor existe en el enum
         nuevoProducto.setCategoria(Categoria.CABALLERO);
         nuevoProducto.setColor(Color.ROJO);

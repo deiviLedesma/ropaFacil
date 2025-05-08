@@ -6,6 +6,7 @@ package Entidades;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -40,6 +41,7 @@ public class Venta implements Serializable {
     private List<DetalleVenta> detalleVentas; //checar si llego a tener errores que no sea por el tipo de cascada 
 
     public Venta() {
+        this.detalleVentas = new ArrayList<>();
     }
 
     public Venta(LocalDateTime fechaHora, double total, List<DetalleVenta> detalleVentas) {

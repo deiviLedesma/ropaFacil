@@ -41,7 +41,6 @@ public class ProductoDTO {
         this.precioUnitario = producto.getPrecioUnitario();
         this.caja = producto.getCaja();
         this.estado = producto.getEstado();
-        // Puedes dejar las listas vacías si no las necesitas
         this.detallesVenta = new ArrayList<>();
         this.detallesCompra = new ArrayList<>();
     }
@@ -152,6 +151,14 @@ public class ProductoDTO {
         producto.setPrecioUnitario(this.precioUnitario);
         producto.setCaja(this.caja);
         producto.setEstado(this.estado);
+
+        // Asegura que las listas no sean null (opcional, porque ya se hace en el constructor)
+        if (producto.getDetalleCompras() == null) {
+            producto.setDetalleCompras(new ArrayList<>());
+        }
+        if (producto.getDetalleVentas() == null) {
+            producto.setDetalleVentas(new ArrayList<>());
+        }
 
         return producto;
     }

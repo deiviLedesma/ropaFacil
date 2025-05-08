@@ -6,6 +6,7 @@ package Entidades;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -40,6 +41,7 @@ public class Compra implements Serializable {
     private List<DetalleCompra> detalleCompras;
 
     public Compra() {
+        this.detalleCompras = new ArrayList<>();
     }
 
     public Compra(LocalDateTime fechaCompra, double total, List<DetalleCompra> detalleCompras) {

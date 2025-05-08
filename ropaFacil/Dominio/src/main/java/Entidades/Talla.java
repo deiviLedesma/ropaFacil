@@ -5,6 +5,7 @@
 package Entidades;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import javax.persistence.CascadeType;
@@ -68,6 +69,8 @@ public class Talla implements Serializable {
     }
 
     public Talla() {
+        this.detalleCompra = new ArrayList<>();
+        this.detalleVentas = new ArrayList<>();
     }
 
     public Talla(String codigo, List<DetalleCompra> detalleCompra, List<DetalleVenta> detalleVentas) {
@@ -81,14 +84,12 @@ public class Talla implements Serializable {
         this.descripcion = descripcion;
     }
 
-    
     public Talla(String codigo, List<DetalleCompra> detalleCompra, List<DetalleVenta> detalleVentas, String descripcion) {
         this.codigo = codigo;
         this.detalleCompra = detalleCompra;
         this.detalleVentas = detalleVentas;
         this.descripcion = descripcion;
     }
-    
 
     @Override
     public int hashCode() {

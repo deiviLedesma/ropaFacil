@@ -5,6 +5,7 @@
 package Entidades;
 
 import java.io.Serializable;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -36,7 +37,7 @@ public class DetalleVenta implements Serializable {
     @JoinColumn(name = "idVenta", nullable = false)
     private Venta venta;
 
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name = "idProducto", nullable = false)
     private Producto producto;
 
