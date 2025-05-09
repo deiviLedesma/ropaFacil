@@ -5,8 +5,10 @@ import DTO.CompraDTO;
 import DTO.DetalleCompraDTO;
 import DTO.ProductoDTO;
 import DTO.TallaDTO;
-import Entidades.Producto;
-import Entidades.Talla;
+import Enums.Categoria;
+import Enums.Color;
+import Enums.Estado;
+import Enums.Tipo;
 import Exception.NegocioException;
 import Persistencia.PersistenciaException;
 
@@ -14,50 +16,66 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Clase de prueba para registrar y listar compras.
+ *
+ * @author SDavidLedesma
+ */
 public class PruebaCompraBO {
 
     public static void main(String[] args) {
-        CompraBO compraBO = new CompraBO();
-
         try {
+            CompraBO compraBO = new CompraBO();
 
-            // Producto
-            Producto producto = new Producto();
-            producto.setId(1L); // Ajusta si se requiere ID real
-            producto.setNombre("Camisa");
-          //  producto.setDetalleCompras(new ArrayList<>()); // IMPORTANTE para evitar NullPointer
+            // Crear ProductoDTO
+            ProductoDTO productoDTO = new ProductoDTO();
+            productoDTO.setNombre("Camisa Prueba");
+            productoDTO.setTipo(Tipo.CAMISA);
+            productoDTO.setCategoria(Categoria.CABALLERO);
+            productoDTO.setColor(Color.ROJO);
+            productoDTO.setPrecioUnitario(199.99);
+            productoDTO.setCaja("Caja A");
+            productoDTO.setEstado(Estado.ACTIVO);
 
-            ProductoDTO productoDTO = new ProductoDTO(producto);
+            // Crear TallaDTO
+            TallaDTO tallaDTO = new TallaDTO();
+            tallaDTO.setCodigo("M");
+            tallaDTO.setDescripcion("Mediana");
 
-            // Talla
-            Talla talla = new Talla();
-            talla.setCodigo("sxs"); // Ajusta si se requiere ID real
-            talla.setDescripcion("superchicio");
-
-            TallaDTO tallaDTO = new TallaDTO(talla);
-
-            // Detalle de la compra
+            // Crear DetalleCompraDTO
             DetalleCompraDTO detalle = new DetalleCompraDTO();
-            detalle.setCantidad(2);
-            detalle.setPrecioUnitario(12.00);
+            detalle.setCantidad(3);
+            detalle.setPrecioUnitario(199.99);
             detalle.setProducto(productoDTO);
             detalle.setTalla(tallaDTO);
 
-            List<DetalleCompraDTO> detalles = new ArrayList<>();
-            detalles.add(detalle);
+            List<DetalleCompraDTO> listaDetalles = new ArrayList<>();
+            listaDetalles.add(detalle);
 
-            // CompraDTO
+            // Crear CompraDTO
             CompraDTO compraDTO = new CompraDTO();
             compraDTO.setFechaCompra(LocalDateTime.now());
-            compraDTO.setTotal(500.00);
-            compraDTO.setDetalleCompras(detalles);
+            compraDTO.setTotal(3 * 199.99);
+            compraDTO.setDetalleCompras(listaDetalles);
 
             // Registrar compra
-            CompraDTO resultado = compraBO.registrarCompra(compraDTO);
+            CompraDTO compraRegistrada = compraBO.registrarCompra(compraDTO);
+            System.out.println("✅ Compra registrada exitosamente:");
+            System.out.println(compraRegistrada);
 
-            System.out.println("Compra registrada con éxito: " + resultado.getTotal());
+            // Listar compras en el rango de hoy
+            System.out.println("\n📦 Listando compras de hoy...");
+            LocalDateTime desde = LocalDateTime.now().minusDays(1);
+            LocalDateTime hasta = LocalDateTime.now().plusDays(1);
+            List<CompraDTO> compras = compraBO.listarCompras(desde, hasta, null);
+
+            for (CompraDTO c : compras) {
+                System.out.println(c);
+            }
+
         } catch (NegocioException | PersistenciaException e) {
-            System.err.println("Error al registrar la compra: " + e.getMessage());
+            System.err.println("❌ Error durante la operación: " + e.getMessage());
+            e.printStackTrace();
         }
     }
 }

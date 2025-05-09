@@ -30,8 +30,6 @@ public class CompraBO implements ICompraBO {
         this.tallaDAO = new TallaDAO();
     }
 
-  
-
     @Override
     public CompraDTO registrarCompra(CompraDTO compraDTO)
             throws NegocioException, PersistenciaException {
@@ -41,12 +39,12 @@ public class CompraBO implements ICompraBO {
         }
 
         Compra compra = new Compra();
-        compra.setFechaCompra(
-                compraDTO.getFechaCompra() != null
+        compra.setFechaCompra(compraDTO.getFechaCompra() != null
                 ? compraDTO.getFechaCompra() : LocalDateTime.now());
         compra.setTotal(compraDTO.getTotal());
 
         List<DetalleCompra> detalles = new ArrayList<>();
+
         for (DetalleCompraDTO dto : compraDTO.getDetalleCompras()) {
             if (dto.getCantidad() <= 0) {
                 throw new NegocioException("La cantidad debe ser mayor que 0.");
@@ -54,24 +52,32 @@ public class CompraBO implements ICompraBO {
 
             Producto prod = dto.getProducto().toEntity();
 
+            // Asegurar lista no nula
+            if (prod.getDetalleCompras() == null) {
+                prod.setDetalleCompras(new ArrayList<>());
+            }
+
             Talla talla = dto.getTalla().toEntity();
 
-            // 3) DetalleCompra
             DetalleCompra det = new DetalleCompra();
             det.setCompra(compra);
             det.setProducto(prod);
             det.setTalla(talla);
             det.setCantidad(dto.getCantidad());
             det.setPrecioUnitario(dto.getPrecioUnitario());
-            detalles.add(det);
 
-            // 4) Ajustar stock y persistir
-            prod.getDetalleCompras().add(det);
+            detalles.add(det);
             productoDAO.insertar(prod);
+
+            // Insertar o actualizar según el caso
+            if (prod.getId() != null) {
+                productoDAO.actualizar(prod);
+            } else {
+                productoDAO.insertar(prod);
+            }
         }
 
         compra.setDetalleCompras(detalles);
-
         compraDAO.insertar(compra);
 
         return new CompraDTO(compra);
