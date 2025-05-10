@@ -30,6 +30,13 @@ public class CompraBO implements ICompraBO {
         this.tallaDAO = new TallaDAO();
     }
 
+    //constructor para pruebas 
+    public CompraBO(CompraDAO compraDAO, ProductoDAO productoDAO, TallaDAO tallaDAO) {
+        this.compraDAO = compraDAO;
+        this.productoDAO = productoDAO;
+        this.tallaDAO = tallaDAO;
+    }
+
     @Override
     public CompraDTO registrarCompra(CompraDTO compraDTO)
             throws NegocioException, PersistenciaException {
@@ -85,7 +92,7 @@ public class CompraBO implements ICompraBO {
 
     @Override
     public List<CompraDTO> listarCompras(LocalDateTime desde, LocalDateTime hasta,
-            Integer idProducto)
+            Long idProducto)
             throws PersistenciaException {
         List<Compra> compras = compraDAO.buscarTodas();
         List<CompraDTO> dtos = new ArrayList<>();

@@ -37,6 +37,6 @@ public interface ICompraBO {
      * @throws Persistencia.PersistenciaException 
      */
     List<CompraDTO> listarCompras(LocalDateTime desde, LocalDateTime hasta,
-            Integer idProducto)
+            Long idProducto)
             throws PersistenciaException;
 }

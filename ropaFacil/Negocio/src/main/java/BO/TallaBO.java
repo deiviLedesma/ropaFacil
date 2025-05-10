@@ -15,9 +15,11 @@ public class TallaBO implements ITallaBO {
 
     private final TallaDAO tallaDAO;
 
+    
     public TallaBO() {
         this.tallaDAO = new TallaDAO();
     }
+    
 
     @Override
     public TallaDTO crearTalla(TallaDTO dto)

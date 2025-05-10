@@ -29,7 +29,7 @@ public class PruebaCompraBO {
 
             // Crear ProductoDTO
             ProductoDTO productoDTO = new ProductoDTO();
-            productoDTO.setNombre("Camisa Prueba");
+            productoDTO.setNombre("Camisa Prueba233");
             productoDTO.setTipo(Tipo.CAMISA);
             productoDTO.setCategoria(Categoria.CABALLERO);
             productoDTO.setColor(Color.ROJO);
@@ -39,8 +39,8 @@ public class PruebaCompraBO {
 
             // Crear TallaDTO
             TallaDTO tallaDTO = new TallaDTO();
-            tallaDTO.setCodigo("M");
-            tallaDTO.setDescripcion("Mediana");
+            tallaDTO.setCodigo("S");
+            tallaDTO.setDescripcion("Chica");
 
             // Crear DetalleCompraDTO
             DetalleCompraDTO detalle = new DetalleCompraDTO();
@@ -60,11 +60,11 @@ public class PruebaCompraBO {
 
             // Registrar compra
             CompraDTO compraRegistrada = compraBO.registrarCompra(compraDTO);
-            System.out.println("✅ Compra registrada exitosamente:");
+            System.out.println(" Compra registrada exitosamente:");
             System.out.println(compraRegistrada);
 
             // Listar compras en el rango de hoy
-            System.out.println("\n📦 Listando compras de hoy...");
+            System.out.println(" Listando compras de hoy...");
             LocalDateTime desde = LocalDateTime.now().minusDays(1);
             LocalDateTime hasta = LocalDateTime.now().plusDays(1);
             List<CompraDTO> compras = compraBO.listarCompras(desde, hasta, null);
@@ -74,7 +74,7 @@ public class PruebaCompraBO {
             }
 
         } catch (NegocioException | PersistenciaException e) {
-            System.err.println("❌ Error durante la operación: " + e.getMessage());
+            System.err.println(" Error durante la operación: " + e.getMessage());
             e.printStackTrace();
         }
     }

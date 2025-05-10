@@ -49,9 +49,10 @@ public class MainPruebasCrud {
         Producto consultado = productoDAO.buscarPorId(productoExistente.getId());
         System.out.println("Producto consultado por ID: " + consultado);
 
+        /**
         // 5. Eliminar
         System.out.println("Eliminando producto con ID " + productoExistente.getId());
         productoDAO.eliminar(productoExistente.getId());
-
+        */
     }
 }

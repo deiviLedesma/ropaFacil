@@ -32,11 +32,11 @@ public class DetalleCompra implements Serializable {
     @JoinColumn(name = "idCompra", nullable = false)
     private Compra compra;
 
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToOne(cascade = {CascadeType.MERGE})
     @JoinColumn(name = "idProducto")
     private Producto producto;
 
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToOne(cascade = {CascadeType.MERGE})
     @JoinColumn(name = "talla")
     private Talla talla;
 

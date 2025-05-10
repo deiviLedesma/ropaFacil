@@ -104,7 +104,7 @@ public class Venta implements Serializable {
 
     @Override
     public String toString() {
-        return "Venta{" + "id=" + id + ", fechaHora=" + fechaHora + ", total=" + total + ", detalleVentas=" + detalleVentas + '}';
+        return "Venta{" + "id=" + id + ", fechaHora=" + fechaHora + ", total=" + total + '}';
     }
 
 }

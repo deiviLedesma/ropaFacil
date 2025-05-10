@@ -39,48 +39,64 @@ public class VentaBO implements IVentaBO {
     public VentaDTO registrarVenta(VentaDTO dto)
             throws NegocioException, PersistenciaException {
 
-        if (dto.getDetalleVentas().isEmpty()) {
+        if (dto == null || dto.getDetalleVentas().isEmpty()) {
             throw new NegocioException("La venta debe contener al menos un detalle.");
         }
-        Venta v = new Venta();
-        v.setFechaHora(LocalDateTime.now());
-        v.setTotal(dto.getTotal());
 
-        List<DetalleVenta> detallesEnt = new ArrayList<>();
-        for (DetalleVentaDTO dDTO : dto.getDetalleVentas()) {
-            // validar existencia y stock
-            Producto p = productoDAO.buscarPorId(dDTO.getProducto().getIdProducto());
-            if (p == null || p.getEstado() != Estado.ACTIVO) {
-                throw new NegocioException("Producto no válido: " + dDTO.getProducto().getNombre());
+        Venta venta = new Venta();
+        venta.setFechaHora(dto.getFechaVenta() != null ? dto.getFechaVenta() : LocalDateTime.now());
+        venta.setTotal(dto.getTotal());
+
+        List<DetalleVenta> detalles = new ArrayList<>();
+
+        for (DetalleVentaDTO detDTO : dto.getDetalleVentas()) {
+            if (detDTO.getCantidad() <= 0) {
+                throw new NegocioException("La cantidad debe ser mayor que 0.");
             }
-            Talla t = tallaDAO.buscarPorCodigo(dDTO.getTalla().getCodigo());
-            if (t == null) {
-                throw new NegocioException("Talla no válida: " + dDTO.getTalla().getCodigo());
+
+            Producto producto = productoDAO.buscarPorId(detDTO.getProducto().getIdProducto());
+            if (producto == null || producto.getEstado() != Estado.ACTIVO) {
+                throw new NegocioException("Producto no válido: " + detDTO.getProducto().getNombre());
             }
-            // verificar stock
-            long disp = p.getDetalleCompras().stream()
-                    .filter(dc -> dc.getTalla().equals(t))
+
+            Talla talla = tallaDAO.buscarPorCodigo(detDTO.getTalla().getCodigo());
+            if (talla == null) {
+                throw new NegocioException("Talla no válida: " + detDTO.getTalla().getCodigo());
+            }
+
+            // Verificar stock disponible
+            long disponible = producto.getDetalleCompras().stream()
+                    .filter(dc -> dc.getTalla().equals(talla))
                     .mapToLong(dc -> dc.getCantidad())
                     .sum();
-            if (dDTO.getCantidad() > disp) {
-                throw new NegocioException("Stock insuficiente para " + p.getNombre());
+
+            if (detDTO.getCantidad() > disponible) {
+                throw new NegocioException("Stock insuficiente para " + producto.getNombre());
             }
-            // crear detalle
-            DetalleVenta dv = dDTO.toEntity();
-            dv.setVenta(v);
-            detallesEnt.add(dv);
-            // descontar stock (lógica en memoria)
-            p.getDetalleCompras().stream()
-                    .filter(dc -> dc.getTalla().equals(t))
+
+            // Descontar stock (en memoria)
+            producto.getDetalleCompras().stream()
+                    .filter(dc -> dc.getTalla().equals(talla))
                     .findFirst()
-                    .ifPresent(dc -> dc.setCantidad(dc.getCantidad() - dDTO.getCantidad()));
-            productoDAO.actualizar(p);
+                    .ifPresent(dc -> dc.setCantidad(dc.getCantidad() - detDTO.getCantidad()));
+
+            productoDAO.actualizar(producto);
+
+            // Crear detalle
+            DetalleVenta detalle = new DetalleVenta();
+            detalle.setVenta(venta);
+            detalle.setProducto(producto);
+            detalle.setTalla(talla);
+            detalle.setCantidad(detDTO.getCantidad());
+            detalle.setPrecioUnitario(detDTO.getPrecioUnitario());
+
+            detalles.add(detalle);
         }
-        v.setDetalleVentas(detallesEnt);
-        
-        ventaDAO.insertar(v);
-        
-        return new VentaDTO(v);
+
+        venta.setDetalleVentas(detalles);
+        ventaDAO.insertar(venta);
+
+        return new VentaDTO(venta);
     }
 
     @Override
