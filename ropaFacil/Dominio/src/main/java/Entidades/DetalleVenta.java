@@ -33,15 +33,15 @@ public class DetalleVenta implements Serializable {
      * idVenta generado Insertar uno a uno los DetalleVentaEntidad con ese
      * idVenta
      */
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "idVenta", nullable = false)
     private Venta venta;
 
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToOne(cascade = {CascadeType.PERSIST}) // agregar merge
     @JoinColumn(name = "idProducto")
     private Producto producto;
 
-    @ManyToOne
+    @ManyToOne //(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "talla")
     private Talla talla;
 

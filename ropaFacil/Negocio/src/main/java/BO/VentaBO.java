@@ -20,7 +20,7 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- *
+ * 
  * @author SDavidLedesma
  */
 public class VentaBO implements IVentaBO {
@@ -74,7 +74,7 @@ public class VentaBO implements IVentaBO {
                 throw new NegocioException("Stock insuficiente para " + producto.getNombre());
             }
 
-            // Descontar stock (en memoria)
+            // Descontar stock en memoria
             producto.getDetalleCompras().stream()
                     .filter(dc -> dc.getTalla().equals(talla))
                     .findFirst()
@@ -82,9 +82,9 @@ public class VentaBO implements IVentaBO {
 
             productoDAO.actualizar(producto);
 
-            // Crear detalle
+            // Crear y asociar detalle
             DetalleVenta detalle = new DetalleVenta();
-            detalle.setVenta(venta);
+            detalle.setVenta(venta); // importante para la relación bidireccional
             detalle.setProducto(producto);
             detalle.setTalla(talla);
             detalle.setCantidad(detDTO.getCantidad());
@@ -93,7 +93,10 @@ public class VentaBO implements IVentaBO {
             detalles.add(detalle);
         }
 
+        // Relacionar los detalles a la venta
         venta.setDetalleVentas(detalles);
+
+        // Persistir venta (con detalles, gracias a CascadeType.ALL en Venta.detalleVentas)
         ventaDAO.insertar(venta);
 
         return new VentaDTO(venta);

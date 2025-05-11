@@ -115,7 +115,7 @@ public class Talla implements Serializable {
 
     @Override
     public String toString() {
-        return "Talla{" + "codigo=" + codigo + ", detalleCompra=" + detalleCompra + ", detalleVentas=" + detalleVentas + ", descripcion=" + descripcion + '}';
+        return "Talla{" + "codigo=" + codigo + ", descripcion=" + descripcion + '}';
     }
 
 }

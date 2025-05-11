@@ -5,7 +5,6 @@ import DAO.VentaDAO;
 import Entidades.Compra;
 import Entidades.Venta;
 import Persistencia.PersistenciaException;
-import static java.lang.System.out;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 

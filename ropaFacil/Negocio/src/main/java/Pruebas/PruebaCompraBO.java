@@ -29,7 +29,7 @@ public class PruebaCompraBO {
 
             // Crear ProductoDTO
             ProductoDTO productoDTO = new ProductoDTO();
-            productoDTO.setNombre("Camisa Prueba233");
+            productoDTO.setNombre("Camisa Prueba23a33");
             productoDTO.setTipo(Tipo.CAMISA);
             productoDTO.setCategoria(Categoria.CABALLERO);
             productoDTO.setColor(Color.ROJO);
@@ -39,12 +39,12 @@ public class PruebaCompraBO {
 
             // Crear TallaDTO
             TallaDTO tallaDTO = new TallaDTO();
-            tallaDTO.setCodigo("S");
+            tallaDTO.setCodigo("Sm");
             tallaDTO.setDescripcion("Chica");
 
             // Crear DetalleCompraDTO
             DetalleCompraDTO detalle = new DetalleCompraDTO();
-            detalle.setCantidad(3);
+            detalle.setCantidad(100);
             detalle.setPrecioUnitario(199.99);
             detalle.setProducto(productoDTO);
             detalle.setTalla(tallaDTO);

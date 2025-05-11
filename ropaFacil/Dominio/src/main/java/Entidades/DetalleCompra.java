@@ -28,15 +28,15 @@ public class DetalleCompra implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "idCompra", nullable = false)
+    @ManyToOne(cascade = {CascadeType.PERSIST})
+    @JoinColumn(name = "idCompra", nullable = false) //aqui nada
     private Compra compra;
 
-    @ManyToOne(cascade = {CascadeType.MERGE})
+    @ManyToOne(cascade = {CascadeType.PERSIST}) //Aqui merge
     @JoinColumn(name = "idProducto")
     private Producto producto;
 
-    @ManyToOne(cascade = {CascadeType.MERGE})
+    @ManyToOne//aqui tenia merge
     @JoinColumn(name = "talla")
     private Talla talla;
 

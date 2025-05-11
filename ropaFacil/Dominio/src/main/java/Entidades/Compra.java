@@ -11,6 +11,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -37,7 +38,8 @@ public class Compra implements Serializable {
     @Column(name = "total_compra", nullable = false)
     private double total;
 
-    @OneToMany(mappedBy = "compra", cascade = CascadeType.MERGE)
+    //@OneToMany(mappedBy = "compra", cascade = CascadeType.MERGE)
+    @OneToMany(mappedBy = "compra", cascade = CascadeType.ALL, fetch = FetchType.LAZY) //me daba error con merge
     private List<DetalleCompra> detalleCompras;
 
     public Compra() {
