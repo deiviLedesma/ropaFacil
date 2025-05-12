@@ -1,0 +1,29 @@
+enlace al figma
+- esta la primer versión y la final en el mismo figma
+https://www.figma.com/design/zKI8hOobXAh3GgH82PZ8D4/ropaFacil?node-id=0-1&p=f&t=YztyjH3l60f86a6I-0
+
+-Instrucciones
+no alcance a hacer una carga previa para que no tuviera que agregar nada a la base de datos y poder usarlo pero para poder crear compras y utilizar los productos etc, tiene que crear las talla de xs a 3xl
+
+-errores
+cuando genera una compra del producto no lo puede vender ya que no se actualiza el combobox,
+tiene que salir y volver a entrar
+
+también cuando realiza una compra duplica la insercino en la base de datos (este error me di cuenta al final en la capa de presentación, es un error de por como tengo el PanelCompras pero no me dio tiempo a corregir)
+
+algunos botones no tienen funcionalidades (ver historial de compras (no alcance a programarlo), exportar a pdf (para las funcionalidades futuras como decia en el programa))
+
+en inventarios ocupa abrir toda la ventana para que le muestre los demás botones y darle click en buscar asi vacio
+para que le refleje los datos del producto adquirido
+
+mal uso del patrón singleton, solo quedo la instancia de los DAO pero creo que al final solo use el de unas clases
+
+la interfaz accede directamente a la base de datos(grave error) solo que por cuestiones de tiempo personales
+no pude hacer el controlador para que no pudiera acceder a ellos
+
+-pruebas
+las pruebas en dao pasaron todas (tanto como DAOTEST y en clase main)
+las pruebas en BO solo hice 2 con mockito y todas en clases main individuales y pasaron las pruebas
+
+
+en teoría creo que es todo lo que noto, o al menos ahorita que no he dormido jajaja, una disculpa por no terminarlo completo
