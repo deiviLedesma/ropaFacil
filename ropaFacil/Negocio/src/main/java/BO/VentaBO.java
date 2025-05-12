@@ -96,7 +96,7 @@ public class VentaBO implements IVentaBO {
         // Relacionar los detalles a la venta
         venta.setDetalleVentas(detalles);
 
-        // Persistir venta (con detalles, gracias a CascadeType.ALL en Venta.detalleVentas)
+        // Persistir venta con detalles
         ventaDAO.insertar(venta);
 
         return new VentaDTO(venta);

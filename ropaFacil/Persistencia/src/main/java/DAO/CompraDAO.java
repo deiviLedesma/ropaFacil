@@ -21,6 +21,7 @@ public class CompraDAO implements ICompraDAO {
     public CompraDAO() {
     }
 
+    //singleton
     public static CompraDAO getInstanceDAO() {
         if (instanceCompraDAO == null) {
             instanceCompraDAO = new CompraDAO();

@@ -6,6 +6,10 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 
+ * @author SDavidLedesma
+ */
 public class VentaDTO {
 
     private Long id;
@@ -13,10 +17,12 @@ public class VentaDTO {
     private Double total;
     private List<DetalleVentaDTO> detalleVentas;
 
+    //constructor que instancia los detalles de venta para poder obtenerlos
     public VentaDTO() {
         this.detalleVentas = new ArrayList<>();
     }
 
+    //constructor que incializa los parametros
     public VentaDTO(Long id, LocalDateTime fechaVenta, Double total, List<DetalleVentaDTO> detalleVentas) {
         this.id = id;
         this.fechaVenta = fechaVenta;

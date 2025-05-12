@@ -22,6 +22,7 @@ public class ProductoDAO implements IProductoDAO {
     public ProductoDAO() {
     }
 
+    //singleton
     public static ProductoDAO getInstanceDAO() {
         if (instanceProductoDAO == null) {
             instanceProductoDAO = new ProductoDAO();

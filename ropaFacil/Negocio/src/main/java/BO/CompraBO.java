@@ -18,6 +18,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * 
+ * @author SDavidLedesma
+ */
 public class CompraBO implements ICompraBO {
 
     private final CompraDAO compraDAO;
@@ -108,7 +112,6 @@ public class CompraBO implements ICompraBO {
                 ok &= c.getDetalleCompras().stream()
                         .anyMatch(d -> Objects.equals(d.getProducto().getId(), idProducto));
             }
-            // proveedor no modelado aquí, omitir
             if (ok) {
                 dtos.add(new CompraDTO(c));
             }

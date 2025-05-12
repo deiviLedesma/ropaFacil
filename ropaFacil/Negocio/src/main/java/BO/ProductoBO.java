@@ -83,7 +83,6 @@ public class ProductoBO implements IProductoBO {
             throw new NegocioException("ID de producto inválido.");
         }
 
-        // (Opcional) validar campos como en crear…
         Producto entidad = dto.toEntity();
         productoDAO.actualizar(entidad);
         return dto;
@@ -93,7 +92,6 @@ public class ProductoBO implements IProductoBO {
     public void eliminarProducto(Long id)
             throws PersistenciaException, NegocioException {
 
-        // (Opcional) checar relaciones antes de borrar…
         productoDAO.eliminar(id);
     }
 }

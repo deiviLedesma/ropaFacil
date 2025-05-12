@@ -6,7 +6,10 @@ import Exception.NegocioException;
 import Persistencia.PersistenciaException;
 
 import java.util.List;
-
+/**
+ * 
+ * @author SDavidLedesma
+ */
 public class MainTallaTest {
 
     public static void main(String[] args) {
@@ -26,7 +29,7 @@ public class MainTallaTest {
 
         // PRUEBA 2: Buscar una talla por código
         try {
-            String codigoBuscar = "M"; // cambia por un código que exista en tu BD
+            String codigoBuscar = "M"; // cambiar por un código que exista 
             TallaDTO encontrada = tallaBO.buscarTallaPorCodigo(codigoBuscar);
             if (encontrada != null) {
                 System.out.println(" Talla encontrada: " + encontrada.getDescripcion() + " (" + encontrada.getCodigo() + ")");

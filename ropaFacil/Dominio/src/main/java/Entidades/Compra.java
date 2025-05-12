@@ -38,7 +38,6 @@ public class Compra implements Serializable {
     @Column(name = "total_compra", nullable = false)
     private double total;
 
-    //@OneToMany(mappedBy = "compra", cascade = CascadeType.MERGE)
     @OneToMany(mappedBy = "compra", cascade = CascadeType.ALL, fetch = FetchType.LAZY) //me daba error con merge
     private List<DetalleCompra> detalleCompras;
 

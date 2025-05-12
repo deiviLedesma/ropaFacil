@@ -29,9 +29,12 @@ public class ProductoDTO {
     private List<DetalleVentaDTO> detallesVenta;
     private List<DetalleCompraDTO> detallesCompra;
 
+    //constructor por omision
     public ProductoDTO() {
     }
-
+    
+    
+    //constructor desde la entidad
     public ProductoDTO(Producto producto) {
         this.idProducto = producto.getId();
         this.nombre = producto.getNombre();
@@ -45,6 +48,7 @@ public class ProductoDTO {
         this.detallesCompra = new ArrayList<>();
     }
 
+    //constructor que inicializa los parametros
     public ProductoDTO(String nombre, Tipo tipo, Categoria categoria, Color color, double precioUnitario, String caja, Estado estado, List<DetalleVentaDTO> detallesVenta, List<DetalleCompraDTO> detallesCompra) {
         this.nombre = nombre;
         this.tipo = tipo;
@@ -57,6 +61,7 @@ public class ProductoDTO {
         this.detallesCompra = detallesCompra;
     }
 
+    //getters y setters
     public Long getIdProducto() {
         return idProducto;
     }
@@ -165,7 +170,9 @@ public class ProductoDTO {
 
     @Override
     public String toString() {
-        return "ProductoDTO{" + "idProducto=" + idProducto + ", nombre=" + nombre + ", tipo=" + tipo + ", categoria=" + categoria + ", color=" + color + ", precioUnitario=" + precioUnitario + ", caja=" + caja + ", estado=" + estado + ", detallesVenta=" + detallesVenta + ", detallesCompra=" + detallesCompra + '}';
+        return nombre + ", tipo=" + tipo + ", categoria=" + categoria + ", color=" + color + ", precioUnitario=" + precioUnitario + ", estado=" + estado + '}';
     }
+
+    
 
 }

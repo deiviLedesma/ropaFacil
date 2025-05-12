@@ -22,6 +22,7 @@ public class VentaDAO implements IVentaDAO {
     public VentaDAO() {
     }
 
+    //singleton
     public static VentaDAO getInstanceDAO() {
         if (instanceVentaDAO == null) {
             instanceVentaDAO = new VentaDAO();

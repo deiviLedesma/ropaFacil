@@ -18,9 +18,11 @@ public class DetalleVentaDTO {
     private int cantidad;
     private double precioUnitario;
 
+    // constructor por omision
     public DetalleVentaDTO() {
     }
 
+    // constructor que incializa los parametros
     public DetalleVentaDTO(Long id, ProductoDTO producto, TallaDTO talla, int cantidad, double precioUnitario) {
         this.id = id;
         this.producto = producto;

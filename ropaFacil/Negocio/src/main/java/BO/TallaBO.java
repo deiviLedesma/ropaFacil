@@ -11,6 +11,10 @@ import Interfaces.ITallaBO;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * 
+ * @author SDavidLedesma
+ */
 public class TallaBO implements ITallaBO {
 
     private final TallaDAO tallaDAO;

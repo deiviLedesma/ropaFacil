@@ -88,5 +88,4 @@ public class ProductoBOTest {
         });
     }
 
-    // Más pruebas pueden añadirse para buscarPorId, actualizarProducto, etc.
 }

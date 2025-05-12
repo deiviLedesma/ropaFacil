@@ -29,14 +29,14 @@ public class DetalleCompra implements Serializable {
     private Long id;
 
     @ManyToOne(cascade = {CascadeType.PERSIST})
-    @JoinColumn(name = "idCompra", nullable = false) //aqui nada
+    @JoinColumn(name = "idCompra", nullable = false) 
     private Compra compra;
 
-    @ManyToOne(cascade = {CascadeType.PERSIST}) //Aqui merge
+    @ManyToOne(cascade = {CascadeType.PERSIST}) 
     @JoinColumn(name = "idProducto")
     private Producto producto;
 
-    @ManyToOne//aqui tenia merge
+    @ManyToOne
     @JoinColumn(name = "talla")
     private Talla talla;
 

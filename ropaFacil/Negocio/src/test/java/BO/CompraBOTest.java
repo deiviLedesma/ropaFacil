@@ -28,6 +28,10 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
+/**
+ * 
+ * @author SDavidLedesma
+ */
 public class CompraBOTest {
 
     private CompraDAO mockCompraDAO;

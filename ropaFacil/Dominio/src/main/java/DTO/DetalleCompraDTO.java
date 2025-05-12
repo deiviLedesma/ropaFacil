@@ -7,7 +7,7 @@ package DTO;
 import Entidades.DetalleCompra;
 
 /**
- *
+ * Clase DetallaeCompraDTO
  * @author SDavidLedesma
  */
 public class DetalleCompraDTO {
@@ -18,9 +18,11 @@ public class DetalleCompraDTO {
     private int cantidad;
     private double precioUnitario;
 
+    // constructor por omision
     public DetalleCompraDTO() {
     }
 
+    // constructor que inicializa los parametros
     public DetalleCompraDTO(Long id, ProductoDTO producto, TallaDTO talla, int cantidad, double precioUnitario) {
         this.id = id;
         this.producto = producto;

@@ -13,16 +13,20 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 
+ * @author SDavidLedesma
+ */
 public class MainVentaTest {
 
     public static void main(String[] args) {
         try {
             VentaBO ventaBO = new VentaBO();
 
-            // Producto existente en BD con ID 6 (por ejemplo)
+            // Producto existente en BD 
             ProductoDTO productoDTO = new ProductoDTO();
-            productoDTO.setIdProducto(9L); // Cambia este valor al ID real
-            productoDTO.setColor(Color.ROJO); // Necesario si vas a filtrar por color
+            productoDTO.setIdProducto(9L); 
+            productoDTO.setColor(Color.ROJO); 
 
             // Talla existente en BD con código "S"
             TallaDTO tallaDTO = new TallaDTO();
@@ -33,7 +37,7 @@ public class MainVentaTest {
             detalle.setProducto(productoDTO);
             detalle.setTalla(tallaDTO);
             detalle.setCantidad(1);
-            detalle.setPrecioUnitario(250.00); // puedes ajustar el precio
+            detalle.setPrecioUnitario(250.00); 
 
             List<DetalleVentaDTO> detalles = new ArrayList<>();
             detalles.add(detalle);
@@ -41,7 +45,7 @@ public class MainVentaTest {
             // Crear la venta
             VentaDTO ventaDTO = new VentaDTO();
             ventaDTO.setFechaVenta(LocalDateTime.now());
-            ventaDTO.setTotal(250.00); // total de la venta
+            ventaDTO.setTotal(250.00); 
             ventaDTO.setDetalleVentas(detalles);
 
             // Registrar

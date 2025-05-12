@@ -22,14 +22,14 @@ public class MainPruebasCrud {
         // 1. Insertar producto
         Producto nuevoProducto = new Producto();
         nuevoProducto.setNombre("TestProSductoQ");
-        nuevoProducto.setTipo(Tipo.CAMISA); // asegúrate que este valor existe en el enum
+        nuevoProducto.setTipo(Tipo.CAMISA);
         nuevoProducto.setCategoria(Categoria.CABALLERO);
         nuevoProducto.setColor(Color.ROJO);
         nuevoProducto.setPrecioUnitario(15.5);
         nuevoProducto.setCaja("Caja 1");
         nuevoProducto.setEstado(Estado.ACTIVO);
 
-        System.out.println("Insertando producto...");
+        System.out.println("Insertando producto");
         productoDAO.insertar(nuevoProducto);
 
         // 2. Consultar todos

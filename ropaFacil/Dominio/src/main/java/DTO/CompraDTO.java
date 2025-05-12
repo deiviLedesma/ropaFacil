@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- *
+ * Clase DTO de compra
  * @author SDavidLedesma
  */
 public class CompraDTO {

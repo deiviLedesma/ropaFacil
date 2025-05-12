@@ -21,6 +21,7 @@ public class TallaDAO implements ITallaDAO {
     public TallaDAO() {
     }
 
+    //singleton
     public static TallaDAO getInstanceDAO() {
         if (instanceTallaDAO == null) {
             instanceTallaDAO = new TallaDAO();

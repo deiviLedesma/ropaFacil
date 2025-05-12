@@ -19,9 +19,11 @@ public class TallaDTO {
     private List<DetalleVentaDTO> detalleVentaTalla;
     private List<DetalleCompraDTO> detalleCompraTalla;
 
+    //constructor por omision
     public TallaDTO() {
     }
 
+    //constructor que inacializa los parametros
     public TallaDTO(String codigo, String descripcion, List<DetalleVentaDTO> detalleVentaTalla, List<DetalleCompraDTO> detalleCompraTalla) {
         this.codigo = codigo;
         this.descripcion = descripcion;
@@ -60,6 +62,7 @@ public class TallaDTO {
         return talla;
     }
 
+    //getters y setters
     public String getCodigo() {
         return codigo;
     }
